@@ -3,6 +3,7 @@
 class GroupHelper:
     def __init__(self, app):
         self.app = app
+
     def create(self, Group):
         wd = self.app.wd
 
@@ -26,9 +27,18 @@ class GroupHelper:
         wd.find_element_by_name('submit').click()
         self.return_group_page()
 
-
     def return_group_page(self):
         wd = self.app.wd
 
         # Return to groups page
         wd.find_element_by_link_text('groups').click()
+
+    def delete_first_group(self):
+        wd = self.app.wd
+        # create group
+        wd.find_element_by_link_text('groups').click()
+        # Select first group
+        wd.find_element_by_css_selector('input[type="checkbox"]').click()
+        # Delete first group
+        wd.find_element_by_css_selector('input[type="submit"][name="delete"]').click()
+        self.return_group_page()
