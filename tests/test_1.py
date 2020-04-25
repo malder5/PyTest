@@ -9,12 +9,12 @@ def app(request):
     request.addfinalizer(fixture.destroy)
     return fixture
 
-def test_test_add_empty_group(self):
-    self.app.login(user='admin', password='secret')
-    self.app.create_group(group(name='', header='', footer=''))
-    self.app.logout()
+def test_test_add_empty_group(app):
+    app.session.login(user='admin', password='secret')
+    app.group.create(group(name='', header='', footer=''))
+    app.session.logout()
 
-def test_test_add_group(self):
-    self.app.login(user='admin', password='secret')
-    self.app.create_group(group(name='ljfsalrekj', header=';lkj', footer='lkjh'))
-    self.app.logout()
+def test_test_add_group(app):
+    app.session.login(user='admin', password='secret')
+    app.group.create(group(name='ljfsalrekj', header=';lkj', footer='lkjh'))
+    app.session.logout()
