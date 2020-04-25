@@ -13,19 +13,24 @@ class GroupHelper:
         # Init_group creation
         wd.find_element_by_name('new').click()
 
-        # fill group form
-        wd.find_element_by_name('group_name').click()
-        wd.find_element_by_name('group_name').clear()
-        wd.find_element_by_name('group_name').send_keys('%s' % Group.name)
-        wd.find_element_by_name('group_header').click()
-        wd.find_element_by_name('group_header').clear()
-        wd.find_element_by_name('group_header').send_keys('%s' % Group.header)
-        wd.find_element_by_name('group_footer').click()
-        wd.find_element_by_name('group_footer').clear()
-        wd.find_element_by_name('group_footer').send_keys('%s' % Group.footer)
+        self.fill_group_form(Group)
         # Subimt group creation
         wd.find_element_by_name('submit').click()
         self.return_group_page()
+
+    def fill_group_form(self, Group):
+        wd = self.app.wd
+        # fill group form
+        self.change_field_value(field_name='group_name', text=Group.name)
+        self.change_field_value(field_name='group_header', text=Group.header)
+        self.change_field_value(field_name='group_footer', text=Group.footer)
+
+    def change_field_value(self, text, field_name):
+        wd = self.app.wd
+        if text != None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys('%s' % text)
 
     def return_group_page(self):
         wd = self.app.wd
@@ -37,8 +42,26 @@ class GroupHelper:
         wd = self.app.wd
         # create group
         wd.find_element_by_link_text('groups').click()
-        # Select first group
-        wd.find_element_by_css_selector('input[type="checkbox"]').click()
+        self.select_first_group()
         # Delete first group
         wd.find_element_by_css_selector('input[type="submit"][name="delete"]').click()
         self.return_group_page()
+
+    def modify_first_group(self, Group):
+        wd = self.app.wd
+        # Open Groups
+        wd.find_element_by_link_text('groups').click()
+        self.select_first_group()
+        # open modification form
+        wd.find_element_by_css_selector('input[type="submit"][name="edit"]').click()
+        # Fill modification form
+        self.fill_group_form(Group)
+        # submit modification
+        wd.find_element_by_css_selector('input[name="update"]').click()
+        self.return_group_page()
+
+    def select_first_group(self):
+        wd = self.app.wd
+        # Select first group
+        wd.find_element_by_css_selector('input[type="checkbox"]').click()
+

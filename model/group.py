@@ -2,8 +2,9 @@
 
 class group:
     def __init__(self,
-                 name,
-                 header, footer):
+                 name=None,
+                 header=None,
+                 footer=None):
         self.name = name
         self.header = header
         self.footer = footer
