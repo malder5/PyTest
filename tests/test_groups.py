@@ -20,7 +20,3 @@ def test_add_group(app):
     app.group.create(group(name='ljfsalrekj', header=';lkj', footer='lkjh'))
     app.session.logout()
 
-def test_add_contact(app):
-    app.session.login(user='admin', password='secret')
-    app.contact.create(Contacts(lastname='', firstname='', nickname='', middlename=''))
-    app.session.logout()
