@@ -53,3 +53,9 @@ class Contacts:
         self.notes = notes
         self.photo = photo
         self.id = id
+
+    def __repr__(self):
+        return "%s, %s" %(self.firstname, self.id)
+
+    def __eq__(self, other):
+        return self.firstname == other.firstname and self.id == other.id
