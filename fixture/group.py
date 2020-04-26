@@ -49,8 +49,7 @@ class GroupHelper:
 
     def modify_first_group(self, Group):
         wd = self.app.wd
-        # Open Groups
-        wd.find_element_by_link_text('groups').click()
+        self.open_group_page()
         self.select_first_group()
         # open modification form
         wd.find_element_by_css_selector('input[type="submit"][name="edit"]').click()
@@ -60,8 +59,17 @@ class GroupHelper:
         wd.find_element_by_css_selector('input[name="update"]').click()
         self.return_group_page()
 
+    def open_group_page(self):
+        # Open Groups
+        wd = self.app.wd
+        wd.find_element_by_link_text('groups').click()
+
     def select_first_group(self):
         wd = self.app.wd
         # Select first group
         wd.find_element_by_css_selector('input[type="checkbox"]').click()
 
+    def count(self):
+        wd = self.app.wd
+        self.open_group_page()
+        return len(wd.find_elements_by_css_selector('input[name="selected[]"]'))

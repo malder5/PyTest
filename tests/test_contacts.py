@@ -6,8 +6,12 @@ def test_add_contact(app):
 
 
 def test_delete_contact(app):
+    if app.contact.count() <= 1:
+        app.contact.create(Contacts(lastname='123', firstname='123', home='777777777'))
     app.contact.delete_first_contact()
 
 
 def test_modify_first_contact(app):
+    if app.contact.count() <= 1:
+        app.contact.create(Contacts(lastname='123', firstname='123', home='777777777'))
     app.contact.modify_first(Contacts(lastname='vassya', firstname='visilyevich', home='888888888'))
