@@ -1,4 +1,4 @@
-
+from model.contact import Contacts
 
 class ContactsHelper:
     def __init__(self, app):
@@ -33,11 +33,11 @@ class ContactsHelper:
 
     def modify_first(self, Contacts):
         wd = self.app.wd
-        wd.find_element_by_css_selector('#nav > ul > li:nth-child(2) > a').click()
+        wd.find_element_by_css_selector('img[alt="Edit"]').click()
 
         self.fill_group_form(Contacts)
 
-        wd.find_element_by_name('submit').click()
+        wd.find_element_by_name('update').click()
         self.return_contact_page()
 
     def fill_group_form(self, Contacts):
@@ -74,4 +74,20 @@ class ContactsHelper:
     def count(self):
         wd = self.app.wd
         self.return_contact_page()
+        check = len(wd.find_elements_by_css_selector('input[name="selected[]"]'))
         return len(wd.find_elements_by_css_selector('input[name="selected[]"]'))
+
+    def get_list(self):
+        wd = self.app.wd
+        self.return_contact_page()
+        contacts = []
+        elems = wd.find_elements_by_css_selector('tr[name="entry"]') # #maintable > tbody > tr:nth-child(2) > td:nth-child(2)
+        for elem in elems:
+            text = elem.find_element_by_css_selector('tr[name="entry"] td:nth-child(2)').text
+            id = elem.find_element_by_css_selector('input').get_attribute('value')
+            contacts.append(
+                Contacts(
+                    firstname=text,
+                    id=id
+            ))
+        return contacts
