@@ -7,7 +7,7 @@ from fixture.contacts import ContactsHelper
 class Application:
     def __init__(self):
         self.wd = WebDriver(executable_path=r'C:\Users\Roman\Downloads\chromedriver.exe')
-        self.wd.implicitly_wait(5)
+        # self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactsHelper(self)

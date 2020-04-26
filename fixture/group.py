@@ -19,7 +19,6 @@ class GroupHelper:
         self.return_group_page()
 
     def fill_group_form(self, Group):
-        wd = self.app.wd
         # fill group form
         self.change_field_value(field_name='group_name', text=Group.name)
         self.change_field_value(field_name='group_header', text=Group.header)
@@ -27,7 +26,7 @@ class GroupHelper:
 
     def change_field_value(self, text, field_name):
         wd = self.app.wd
-        if text != None:
+        if text is not None:
             wd.find_element_by_name(field_name).click()
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys('%s' % text)
@@ -62,7 +61,8 @@ class GroupHelper:
     def open_group_page(self):
         # Open Groups
         wd = self.app.wd
-        wd.find_element_by_link_text('groups').click()
+        if not (wd.current_url.endswith('/group.php') and len(wd.find_elements_by_name('new')) > 0):
+            wd.find_element_by_link_text('groups').click()
 
     def select_first_group(self):
         wd = self.app.wd
