@@ -18,6 +18,7 @@ class GroupHelper:
         # Subimt group creation
         wd.find_element_by_name('submit').click()
         self.return_group_page()
+        self.group_cache = None
 
     def fill_group_form(self, Group):
         # fill group form
@@ -46,6 +47,8 @@ class GroupHelper:
         # Delete first group
         wd.find_element_by_css_selector('input[type="submit"][name="delete"]').click()
         self.return_group_page()
+        self.group_cache = None
+
 
     def modify_first_group(self, Group):
         wd = self.app.wd
@@ -58,6 +61,8 @@ class GroupHelper:
         # submit modification
         wd.find_element_by_css_selector('input[name="update"]').click()
         self.return_group_page()
+        self.group_cache = None
+
 
     def open_group_page(self):
         # Open Groups
@@ -69,19 +74,52 @@ class GroupHelper:
         wd = self.app.wd
         # Select first group
         wd.find_element_by_css_selector('input[type="checkbox"]').click()
+    def select_group_by_index(self, index):
+        wd = self.app.wd
+        # Select first group
+        elems = wd.find_elements_by_css_selector('input[type="checkbox"]')
+        elems[index].click()
+
+    def modify_group_by_index(self, index, Group):
+        wd = self.app.wd
+        self.open_group_page()
+        self.select_group_by_index(index)
+        # open modification form
+        wd.find_element_by_css_selector('input[type="submit"][name="edit"]').click()
+        # Fill modification form
+        self.fill_group_form(Group)
+        # submit modification
+        wd.find_element_by_css_selector('input[name="update"]').click()
+        self.return_group_page()
+        self.group_cache = None
+
+
 
     def count(self):
         wd = self.app.wd
         self.open_group_page()
         return len(wd.find_elements_by_css_selector('input[name="selected[]"]'))
 
-    def get_group_list(self):
-        wd = self.app.wd
-        self.open_group_page()
-        groups = []
-        for elem in wd.find_elements_by_css_selector('span.group'):
-            text = elem.text
-            id = elem.find_element_by_name('selected[]').get_attribute('value')
-            groups.append(Group(name=text, id=id))
-        return groups
+    group_cache = None
 
+    def get_group_list(self):
+        if self.group_cache is None:
+            wd = self.app.wd
+            self.open_group_page()
+            self.group_cache = []
+            for elem in wd.find_elements_by_css_selector('span.group'):
+                text = elem.text
+                id = elem.find_element_by_name('selected[]').get_attribute('value')
+                self.group_cache.append(Group(name=text, id=id))
+            return list(self.group_cache)
+
+    def delete_group_by_index(self, index):
+        wd = self.app.wd
+        # create group
+        wd.find_element_by_link_text('groups').click()
+        self.select_group_by_index(index)
+
+        # Delete first group
+        wd.find_element_by_css_selector('input[type="submit"][name="delete"]').click()
+        self.return_group_page()
+        self.group_cache = None
