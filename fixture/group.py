@@ -1,4 +1,5 @@
-from model.group import group
+from model.group import Group
+from sys import maxsize
 
 class GroupHelper:
     def __init__(self, app):
@@ -81,7 +82,6 @@ class GroupHelper:
         for elem in wd.find_elements_by_css_selector('span.group'):
             text = elem.text
             id = elem.find_element_by_name('selected[]').get_attribute('value')
-            groups.append(group(name=text, id=id))
+            groups.append(Group(name=text, id=id))
         return groups
-
 
