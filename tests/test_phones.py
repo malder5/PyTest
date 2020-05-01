@@ -19,7 +19,8 @@ def test_phones_on_view_page(app):
 
 def merge_phones_from_like_on_home_page(contact):
     return '\n'.join(filter(lambda x: x!='',
-        map(lambda x: clear(x), [(contact.home), (contact.mobile), (contact.work), (contact.phone2)])))
+        map(lambda x: clear(x), filter(lambda x: x is not None,
+                                       [(contact.home), (contact.mobile), (contact.work), (contact.phone2)]))))
 
 def clear(s):
     return re.sub('[() -]','', s)
