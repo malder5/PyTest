@@ -111,7 +111,7 @@ class GroupHelper:
                 text = elem.text
                 id = elem.find_element_by_name('selected[]').get_attribute('value')
                 self.group_cache.append(Group(name=text, id=id))
-            return list(self.group_cache)
+        return list(self.group_cache)
 
     def delete_group_by_index(self, index):
         wd = self.app.wd
