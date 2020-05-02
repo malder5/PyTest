@@ -6,7 +6,7 @@ import string
 from sys import maxsize
 
 def random_string(prefix, maxlen):
-    symbols = string.ascii_letters+string.digits+ " "+string.punctuation
+    symbols = string.ascii_letters+string.digits+ " " #+string.punctuation
     return prefix+''.join([random.choice(symbols) for i in range(randrange(maxlen))])
 
 # testdata = [
@@ -18,7 +18,7 @@ def random_string(prefix, maxlen):
 testdata = [
     Group(name='', header='', footer='')]+[
     Group(name=random_string('name', 10), header=random_string('header', 20), footer=random_string('footer', 20))
-    for i in range(20)]
+    for i in range(10)]
 
 @pytest.mark.parametrize('group', testdata, ids=[repr(x) for x in testdata])
 def test_add_group(app, group):

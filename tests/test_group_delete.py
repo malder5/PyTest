@@ -13,3 +13,9 @@ def test_delete_some_group(app):
 
     old_groups[index:index+1] = []
     assert old_groups == new_groups
+
+# def test_delete_all_groups(app):
+#     old_groups = app.group.get_group_list()
+#     for index in range(len(old_groups)):
+#         app.group.delete_first_group()
+
