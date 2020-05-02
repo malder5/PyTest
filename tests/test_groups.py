@@ -1,8 +1,6 @@
 from model.group import Group
 from random import randrange
 import pytest
-import random
-import string
 from data.add_group import constant as testdata
 
 @pytest.mark.parametrize('group', testdata, ids=[repr(x) for x in testdata])
